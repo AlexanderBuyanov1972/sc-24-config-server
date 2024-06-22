@@ -1,0 +1,69 @@
+my:
+  host: 172.28.0.1
+  host-keycloak: http://${my.host}:9000
+  host-realms: http://${my.host-keycloak}/realms/selmag
+secret-id: 15qqDMxqxUuBuBThviDo2LFKTHMuoNGi
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5434/catalogue
+    username: postgres
+    password: root
+  flyway:
+    schemas:
+      - public
+      - catalogue
+  jpa:
+    show-sql: true
+  boot:
+    admin:
+      client:
+        enabled: false
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${my.host-realms}
+      client:
+        provider:
+          keycloak:
+            issuer-uri: ${my.host-realms}
+        registration:
+          metrics:
+            provider: keycloak
+            client-id: catalogue-service
+            client-secret: ${secret-id}
+            authorization-grant-type: client_credentials
+            scope:
+              - metrics_server
+          discovery:
+            provider: keycloak
+            client-id: catalogue-service
+            client-secret: ${secret-id}
+            authorization-grant-type: client_credentials
+            scope:
+              - discovery
+springdoc:
+  swagger-ui:
+    oauth:
+      client-id: catalogue-service-swagger-ui
+      use-pkce-with-authorization-code-grant: true
+keycloak:
+  uri: ${my.host-keycloak}
+# for administration by admin-service
+management:
+  health:
+    livenessstate:
+      enable: true
+    readinessstate:
+      enable: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${my.host}:8761/eureka/
+  instance:
+    prefer-ip-address: true
