@@ -1,3 +1,5 @@
+my:
+  name: github_selmag_manager_service
 selmag:
   services:
     catalogue:

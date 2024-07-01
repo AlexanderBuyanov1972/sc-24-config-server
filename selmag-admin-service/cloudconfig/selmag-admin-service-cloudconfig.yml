@@ -1,3 +1,5 @@
+my:
+  name: github_selmag_admin_service
 spring:
   security:
     oauth2:

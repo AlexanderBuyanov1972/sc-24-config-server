@@ -1,3 +1,6 @@
+my:
+  name: github_selmag_feedback_service
+
 spring:
   boot:
     admin:

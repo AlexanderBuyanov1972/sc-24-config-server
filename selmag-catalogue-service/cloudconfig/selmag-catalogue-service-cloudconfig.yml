@@ -1,12 +1,8 @@
 my:
-  host: 172.28.0.1
-  host-keycloak: http://${my.host}:9000
-  host-realms: http://${my.host-keycloak}/realms/selmag
-secret-id: 15qqDMxqxUuBuBThviDo2LFKTHMuoNGi
-
+  name: github_selmag_catalogue_service
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5434/catalogue
+    url: jdbc:postgresql://172.28.0.1:5434/catalogue
     username: postgres
     password: root
   flyway:
@@ -23,23 +19,23 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: ${my.host-realms}
+          issuer-uri: http://172.28.0.1:9000/realms/selmag
       client:
         provider:
           keycloak:
-            issuer-uri: ${my.host-realms}
+            issuer-uri: http://172.28.0.1:9000/realms/selmag
         registration:
           metrics:
             provider: keycloak
             client-id: catalogue-service
-            client-secret: ${secret-id}
+            client-secret: 15qqDMxqxUuBuBThviDo2LFKTHMuoNGi
             authorization-grant-type: client_credentials
             scope:
               - metrics_server
           discovery:
             provider: keycloak
             client-id: catalogue-service
-            client-secret: ${secret-id}
+            client-secret: 15qqDMxqxUuBuBThviDo2LFKTHMuoNGi
             authorization-grant-type: client_credentials
             scope:
               - discovery
@@ -49,7 +45,7 @@ springdoc:
       client-id: catalogue-service-swagger-ui
       use-pkce-with-authorization-code-grant: true
 keycloak:
-  uri: ${my.host-keycloak}
+  uri: http://172.28.0.1:9000
 # for administration by admin-service
 management:
   health:
@@ -64,6 +60,6 @@ management:
 eureka:
   client:
     service-url:
-      defaultZone: http://${my.host}:8761/eureka/
+      defaultZone: http://172.28.0.1:8761/eureka/
   instance:
     prefer-ip-address: true

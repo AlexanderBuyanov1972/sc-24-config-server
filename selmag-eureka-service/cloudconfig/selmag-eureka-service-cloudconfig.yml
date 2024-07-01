@@ -1,3 +1,6 @@
+my:
+  name: github_selmag_eureka_service
+  
 eureka:
   instance:
     hostname: 172.28.0.1
