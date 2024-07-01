@@ -1,0 +1,46 @@
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://172.28.0.1:9000/realms/selmag
+          user-name-attribute: preferred_username
+      client:
+        provider:
+          keycloak:
+            issuer-uri: http://172.28.0.1:9000/realms/selmag
+        registration:
+          keycloak:
+            authorization-grant-type: client_credentials
+            client-id: admin-service
+            client-secret: s4VVkcYT74tEkdUOuL33cHrz8TXcpEfn
+            scope:
+              - metrics
+          login:
+            provider: keycloak
+            client-id: admin-service
+            client-secret: s4VVkcYT74tEkdUOuL33cHrz8TXcpEfn
+            scope:
+              - openid
+          discovery:
+            provider: keycloak
+            client-id: admin-service
+            client-secret: s4VVkcYT74tEkdUOuL33cHrz8TXcpEfn
+            authorization-grant-type: client_credentials
+            scope:
+              - discovery
+# for micrometer-registry-prometheus (localhost:8085/actuator/prometheus victoria-metrics)
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health
+          - prometheus
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://172.28.0.1:8761/eureka/
+    register-with-eureka: false

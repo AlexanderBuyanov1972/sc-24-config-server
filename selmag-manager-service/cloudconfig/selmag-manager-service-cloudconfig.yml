@@ -1,0 +1,65 @@
+selmag:
+  services:
+    catalogue:
+      uri: http://172.28.0.1:8081
+      registration-id: keycloak
+spring:
+  boot:
+    admin:
+      client:
+        enabled: false
+  #  datasource:
+  #    url: jdbc:postgresql://localhost:5433/manager
+  #    username: postgres
+  #    password: root
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://172.28.0.1:9000/realms/selmag
+      client:
+        provider:
+          keycloak:
+            issuer-uri: http://172.28.0.1:9000/realms/selmag
+            user-name-attribute: preferred_username
+        registration:
+          keycloak:
+            client-id: manager-service
+            client-secret: RqxYaoM6tJQ9HC4sZaY9eNTWjhXKFC4f
+            scope:
+              - openid
+              - view_catalogue
+              - edit_catalogue
+              - microprofile-jwt
+          metrics:
+            provider: keycloak
+            authorization-grant-type: client_credentials
+            client-id: manager-service
+            client-secret: RqxYaoM6tJQ9HC4sZaY9eNTWjhXKFC4f
+            scope:
+              - metrics_server
+          discovery:
+            provider: keycloak
+            client-id: manager-service
+            client-secret: RqxYaoM6tJQ9HC4sZaY9eNTWjhXKFC4f
+            authorization-grant-type: client_credentials
+            scope:
+              - discovery
+
+management:
+  health:
+    livenessstate:
+      enable: true
+    readinessstate:
+      enable: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://172.28.0.1:8761/eureka/
+  instance:
+    prefer-ip-address: true

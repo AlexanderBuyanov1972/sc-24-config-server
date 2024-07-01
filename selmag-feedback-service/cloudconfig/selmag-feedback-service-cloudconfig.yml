@@ -1,0 +1,75 @@
+spring:
+  boot:
+    admin:
+      client:
+        enabled: false
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://172.28.0.1:9000/realms/selmag
+      client:
+        registration:
+          metrics:
+            provider: keycloak
+            client-id: feedback-service
+            client-secret: Yw5zGBs3wfVQdOuWbT54iZg97iblJiDq
+            authorization-grant-type: client_credentials
+            scope:
+              - metrics_server
+          discovery:
+            provider: keycloak
+            client-id: feedback-service
+            client-secret: Yw5zGBs3wfVQdOuWbT54iZg97iblJiDq
+            authorization-grant-type: client_credentials
+            scope:
+              - discovery
+        provider:
+          keycloak:
+            issuer-uri: http://172.28.0.1:9000/realms/selmag
+springdoc:
+  swagger-ui:
+    oauth:
+      client-id: feedback-service-swagger-ui
+      use-pkce-with-authorization-code-grant: true
+keycloak:
+  uri: http://172.28.0.1:9000
+
+# administration spring boot admin
+management:
+  health:
+    livenessstate:
+      enable: true
+    readinessstate:
+      enable: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+# tracing zipkin
+#zipkin:
+#  tracing:
+#    endpoint: http://${my.host}:9411/api/v2/spans
+#tracing:
+#  sampling:
+#    probability: 1.0
+
+# eureka
+eureka:
+  client:
+    service-url:
+      defaultZone: http://172.28.0.1:8761/eureka/
+  instance:
+    prefer-ip-address: true
+
+#    for connect admin-service to eureka-service we need turn off admin-client for all services
+#spring:
+#  boot:
+#    admin:
+#      client:
+#        enabled: true
+#        instance:
+#          name: feedback-service
+#          service-host-type: ip
+#        url: http://172.28.0.1:8085
