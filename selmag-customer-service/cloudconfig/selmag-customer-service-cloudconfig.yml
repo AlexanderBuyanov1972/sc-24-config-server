@@ -1,14 +1,14 @@
-my:
-  name: github_selmag_customer_service
+pc:
+  host: 172.28.0.1
 selmag:
   services:
     catalogue:
       #      uri: lb://selmag-catalogue-service
-      uri: http://172.28.0.1:8081
+      uri: http://${pc.host}:8081
       registration-id: keycloak
     feedback:
       #      uri: lb://selmag-feedback-service
-      uri: http://172.28.0.1:8083
+      uri: http://${pc.host}:8083
       registration-id: keycloak
 spring:
   boot:
@@ -19,7 +19,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://172.28.0.1:9000/realms/selmag
+          issuer-uri: http://${pc.host}:9000/realms/selmag
       client:
         registration:
           keycloak:
@@ -45,7 +45,7 @@ spring:
               - discovery
         provider:
           keycloak:
-            issuer-uri: http://172.28.0.1:9000/realms/selmag
+            issuer-uri: http://${pc.host}:9000/realms/selmag
             user-name-attribute: preferred_username
 management:
   health:
@@ -60,6 +60,6 @@ management:
 eureka:
   client:
     service-url:
-      defaultZone: http://172.28.0.1:8761/eureka/
+      defaultZone: http://${pc.host}:8761/eureka/
   instance:
     prefer-ip-address: true

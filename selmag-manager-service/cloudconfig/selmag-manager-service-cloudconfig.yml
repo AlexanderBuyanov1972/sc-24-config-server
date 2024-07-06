@@ -1,29 +1,29 @@
-my:
-  name: github_selmag_manager_service
+pc:
+  host: 172.28.0.1
+
 selmag:
   services:
     catalogue:
-      uri: http://172.28.0.1:8081
+      uri: http://${pc.host}:8081
       registration-id: keycloak
 spring:
+  datasource:
+    url: jdbc:postgresql://${pc.host}:5433/manager
+    username: postgres
+    password: root
   boot:
     admin:
       client:
         enabled: false
-  #  datasource:
-  #    url: jdbc:postgresql://localhost:5433/manager
-  #    username: postgres
-  #    password: root
   security:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://172.28.0.1:9000/realms/selmag
+          issuer-uri: http://${pc.host}:9000/realms/selmag
       client:
         provider:
           keycloak:
-            issuer-uri: http://172.28.0.1:9000/realms/selmag
-            user-name-attribute: preferred_username
+            issuer-uri: http://${pc.host}:9000/realms/selmag
         registration:
           keycloak:
             client-id: manager-service
@@ -62,6 +62,6 @@ management:
 eureka:
   client:
     service-url:
-      defaultZone: http://172.28.0.1:8761/eureka/
+      defaultZone: http://${pc.host}:8761/eureka/
   instance:
     prefer-ip-address: true

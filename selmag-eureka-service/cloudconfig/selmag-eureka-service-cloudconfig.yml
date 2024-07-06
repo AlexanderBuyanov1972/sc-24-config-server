@@ -1,24 +1,22 @@
-my:
-  name: github_selmag_eureka_service
-  
+pc:
+  host: 172.28.0.1
 eureka:
   instance:
-    hostname: 172.28.0.1
-    leaseRenewalIntervalInSeconds: 1
-    leaseExpirationDurationInSeconds: 1
+    hostname: ${pc.host}
   client:
-    registryFetchIntervalSeconds: 1
     register-with-eureka: false
     fetch-registry: false
     service-url:
-      defaultZone: http://${eureka.instance.hostname}:8761/eureka/
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
 spring:
+  application:
+    name: selmag-eureka-service
   security:
     oauth2:
       client:
         provider:
           keycloak:
-            issuer-uri: http://172.28.0.1:9000/realms/selmag
+            issuer-uri: http://${pc.host}:9000/realms/selmag
             user-name-attribute: preferred_username
         registration:
           keycloak:
@@ -28,4 +26,4 @@ spring:
               - openid
       resourceserver:
         jwt:
-          issuer-uri: http://172.28.0.1:9000/realms/selmag
+          issuer-uri: http://${pc.host}:9000/realms/selmag

@@ -1,7 +1,10 @@
-my:
-  name: github_selmag_feedback_service
+pc:
+  host: 172.28.0.1
 
 spring:
+  data:
+    mongodb:
+      uri: mongodb://${pc.host}:27017/feedback
   boot:
     admin:
       client:
@@ -10,7 +13,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://172.28.0.1:9000/realms/selmag
+          issuer-uri: http://${pc.host}:9000/realms/selmag
       client:
         registration:
           metrics:
@@ -29,16 +32,15 @@ spring:
               - discovery
         provider:
           keycloak:
-            issuer-uri: http://172.28.0.1:9000/realms/selmag
+            issuer-uri: http://${pc.host}:9000/realms/selmag
 springdoc:
   swagger-ui:
     oauth:
       client-id: feedback-service-swagger-ui
       use-pkce-with-authorization-code-grant: true
 keycloak:
-  uri: http://172.28.0.1:9000
+  uri: http://${pc.host}:9000
 
-# administration spring boot admin
 management:
   health:
     livenessstate:
@@ -49,30 +51,9 @@ management:
     web:
       exposure:
         include: '*'
-
-# tracing zipkin
-#zipkin:
-#  tracing:
-#    endpoint: http://${my.host}:9411/api/v2/spans
-#tracing:
-#  sampling:
-#    probability: 1.0
-
-# eureka
 eureka:
   client:
     service-url:
-      defaultZone: http://172.28.0.1:8761/eureka/
+      defaultZone: http://${pc.host}:8761/eureka/
   instance:
     prefer-ip-address: true
-
-#    for connect admin-service to eureka-service we need turn off admin-client for all services
-#spring:
-#  boot:
-#    admin:
-#      client:
-#        enabled: true
-#        instance:
-#          name: feedback-service
-#          service-host-type: ip
-#        url: http://172.28.0.1:8085
