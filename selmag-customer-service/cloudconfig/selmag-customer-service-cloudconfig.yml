@@ -1,14 +1,10 @@
-pc:
-  host: 172.28.0.1
 selmag:
   services:
     catalogue:
-      #      uri: lb://selmag-catalogue-service
-      uri: http://${pc.host}:8081
+      uri: lb://selmag-catalogue-service
       registration-id: keycloak
     feedback:
-      #      uri: lb://selmag-feedback-service
-      uri: http://${pc.host}:8083
+      uri: lb://selmag-feedback-service
       registration-id: keycloak
 spring:
   boot:
@@ -19,16 +15,16 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://${pc.host}:9000/realms/selmag
+          issuer-uri: http://172.28.0.1:9000/realms/selmag
       client:
         registration:
           keycloak:
             client-id: customer-service
             client-secret: HDVfSb2LppBicZPOyDrwlCjuoQllwJzD
-            authorization-grant-type: client_credentials
             scope:
               - openid
               - view_catalogue
+              - microprofile-jwt
           metrics:
             provider: keycloak
             authorization-grant-type: client_credentials
@@ -45,8 +41,7 @@ spring:
               - discovery
         provider:
           keycloak:
-            issuer-uri: http://${pc.host}:9000/realms/selmag
-            user-name-attribute: preferred_username
+            issuer-uri: http://172.28.0.1:9000/realms/selmag
 management:
   health:
     livenessstate:
@@ -60,6 +55,6 @@ management:
 eureka:
   client:
     service-url:
-      defaultZone: http://${pc.host}:8761/eureka/
+      defaultZone: http://172.28.0.1:8761/eureka/
   instance:
     prefer-ip-address: true

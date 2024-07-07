@@ -1,8 +1,6 @@
-pc:
-  host: 172.28.0.1
 spring:
   datasource:
-    url: jdbc:postgresql://${pc.host}:5432/catalogue
+    url: jdbc:postgresql://172.28.0.1:5432/catalogue
     username: postgres
     password: root
   flyway:
@@ -19,11 +17,11 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://${pc.host}:9000/realms/selmag
+          issuer-uri: http://172.28.0.1:9000/realms/selmag
       client:
         provider:
           keycloak:
-            issuer-uri: http://${pc.host}:9000/realms/selmag
+            issuer-uri: http://172.28.0.1:9000/realms/selmag
         registration:
           metrics:
             provider: keycloak
@@ -45,7 +43,7 @@ springdoc:
       client-id: catalogue-service-swagger-ui
       use-pkce-with-authorization-code-grant: true
 keycloak:
-  uri: http://${pc.host}:9000
+  uri: http://172.28.0.1:9000
 management:
   health:
     livenessstate:
@@ -59,6 +57,6 @@ management:
 eureka:
   client:
     service-url:
-      defaultZone: http://${pc.host}:8761/eureka/
+      defaultZone: http://172.28.0.1:8761/eureka/
   instance:
     prefer-ip-address: true

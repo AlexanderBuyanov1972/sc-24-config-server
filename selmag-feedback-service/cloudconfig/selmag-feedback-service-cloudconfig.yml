@@ -1,10 +1,7 @@
-pc:
-  host: 172.28.0.1
-
 spring:
   data:
     mongodb:
-      uri: mongodb://${pc.host}:27017/feedback
+      uri: mongodb://172.28.0.1:27017/feedback
   boot:
     admin:
       client:
@@ -13,7 +10,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://${pc.host}:9000/realms/selmag
+          issuer-uri: http://172.28.0.1:9000/realms/selmag
       client:
         registration:
           metrics:
@@ -32,14 +29,14 @@ spring:
               - discovery
         provider:
           keycloak:
-            issuer-uri: http://${pc.host}:9000/realms/selmag
+            issuer-uri: http://172.28.0.1:9000/realms/selmag
 springdoc:
   swagger-ui:
     oauth:
       client-id: feedback-service-swagger-ui
       use-pkce-with-authorization-code-grant: true
 keycloak:
-  uri: http://${pc.host}:9000
+  uri: http://172.28.0.1:9000
 
 management:
   health:
@@ -54,6 +51,6 @@ management:
 eureka:
   client:
     service-url:
-      defaultZone: http://${pc.host}:8761/eureka/
+      defaultZone: http://172.28.0.1:8761/eureka/
   instance:
     prefer-ip-address: true

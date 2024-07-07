@@ -1,16 +1,14 @@
-pc:
-  host: 172.28.0.1
 spring:
   security:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://${pc.host}:9000/realms/selmag
+          issuer-uri: http://172.28.0.1:9000/realms/selmag
           user-name-attribute: preferred_username
       client:
         provider:
           keycloak:
-            issuer-uri: http://${pc.host}:9000/realms/selmag
+            issuer-uri: http://172.28.0.1:9000/realms/selmag
         registration:
           keycloak:
             authorization-grant-type: client_credentials
@@ -43,5 +41,5 @@ eureka:
     prefer-ip-address: true
   client:
     service-url:
-      defaultZone: http://${pc.host}:8761/eureka/
+      defaultZone: http://172.28.0.1:8761/eureka/
     register-with-eureka: false
