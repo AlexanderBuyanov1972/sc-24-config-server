@@ -16,14 +16,14 @@ spring:
           metrics:
             provider: keycloak
             client-id: feedback-service
-            client-secret: Yw5zGBs3wfVQdOuWbT54iZg97iblJiDq
+            client-secret: 0W8yeLHbt542K6FNclor98hW0DRG4mCa
             authorization-grant-type: client_credentials
             scope:
               - metrics_server
           discovery:
             provider: keycloak
             client-id: feedback-service
-            client-secret: Yw5zGBs3wfVQdOuWbT54iZg97iblJiDq
+            client-secret: 0W8yeLHbt542K6FNclor98hW0DRG4mCa
             authorization-grant-type: client_credentials
             scope:
               - discovery
