@@ -5,7 +5,7 @@ selmag:
       registration-id: keycloak
 spring:
   datasource:
-    url: jdbc:postgresql://172.28.0.1:5433/manager
+    url: jdbc:postgresql://172.28.0.1:5434/manager
     username: postgres
     password: root
   boot:
